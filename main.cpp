@@ -18,6 +18,7 @@ int main() {
         show_field(field);
 
         if (game_over(field)) {
+            std::cout << "\nGame over";
             break;
         }
     }

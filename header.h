@@ -5,6 +5,8 @@
 #ifndef CHECKERS_HEADER_H
 #define CHECKERS_HEADER_H
 
+#include <iostream>
+
 struct Checker {
     int row;
     int column;
