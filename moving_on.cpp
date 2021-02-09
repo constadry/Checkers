@@ -35,9 +35,18 @@ void choose_checker(Checker &checker, int field[][8], int color) {
     }
 }
 
-//void attack(int x, int y, int mx, int my, int color, int field[][8]) {
-//
-//}
+void attack(int &x, int &y, int mx, int my, int color, int field[][8]) {
+    field[mx][my] = color; // Ставим шашку на выбранное поле
+    int diffRow = mx - x;
+    diffRow /= abs(diffRow);
+    int diffCol = my - y;
+    diffCol /= abs(diffCol);
+    field[x][y] = 0; // тут больше никого нет
+    field[x + diffRow][y + diffCol] = 0; // и тут...
+    x = mx; // новые координаты для шашки
+    y = my;
+}
+
 
 void moving(Checker &checker, int field[][8], int color) {
     choose_checker(checker, field, color);
@@ -48,10 +57,7 @@ void moving(Checker &checker, int field[][8], int color) {
     int x = checker.row;
     int y = checker.column;
 
-    check_warrior_move(x, -1, y, -1, field, color, warriorsValid);
-    check_warrior_move(x, -1, y, 1, field, color, warriorsValid);
-    check_warrior_move(x, 1, y, -1, field, color, warriorsValid);
-    check_warrior_move(x, 1, y, 1, field, color, warriorsValid);
+    find_move_fields(x, y, field, color, warriorsValid);
 
     int mx, my;
 
@@ -62,23 +68,13 @@ void moving(Checker &checker, int field[][8], int color) {
             mx = toField.row;
             my = toField.column;
             if (warriorsValid.count(std::make_pair(mx, my))) {
-                field[mx][my] = color;
-                int diffRow = mx - x;
-                diffRow /= abs(diffRow);
-                int diffCol = my - y;
-                diffCol /= abs(diffCol);
-                field[x][y] = 0;
-                field[x + diffRow][y + diffCol] = 0;
-                x = mx;
-                y = my;
+                attack(x, y, mx, my, color, field);
                 warriorsValid.clear();
-                check_warrior_move(x, -1, y, -1, field, color, warriorsValid);
-                check_warrior_move(x, -1, y, 1, field, color, warriorsValid);
-                check_warrior_move(x, 1, y, -1, field, color, warriorsValid);
-                check_warrior_move(x, 1, y, 1, field, color, warriorsValid);
+                find_move_fields(x, y, field, color, warriorsValid);
                 if (warriorsValid.empty()) {
                     break;
                 }
+                show_field(field);
                 std::cout << "Attack again!\n";
             } else {
                 std::cout << "Incorrect field to move: \n";

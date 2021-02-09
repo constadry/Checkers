@@ -21,5 +21,8 @@ int access_move(int , int , int , int , int );
 void trigger_check(int [][8], int , std::set< std::pair<int, int> > &);
 void check_warrior_move(int , int , int , int , int [][8], int ,  std::set< std::pair<int, int> > &);
 void check_warrior_choose(int , int , int , int , int [][8], int ,  std::set< std::pair<int, int> > &);
+void find_move_fields(int , int , int [][8], int ,  std::set< std::pair<int, int> > &);
+// показать поле во время серии ударов
+void show_field(int [][8]);
 
 #endif //CHECKERS_MOVING_HEADER_H

@@ -15,6 +15,14 @@ void check_warrior_move(int i, int ci, int j, int cj, int field[][8], int color,
     }
 }
 
+void find_move_fields(int x, int y, int field[][8], int color,  std::set< std::pair<int, int> > &warriorsValid) {
+    check_warrior_move(x, -1, y, -1, field, color, warriorsValid);
+    check_warrior_move(x, -1, y, 1, field, color, warriorsValid);
+    check_warrior_move(x, 1, y, -1, field, color, warriorsValid);
+    check_warrior_move(x, 1, y, 1, field, color, warriorsValid);
+}
+
+
 void check_warrior_choose(int i, int ci, int j, int cj, int field[][8], int color,  std::set< std::pair<int, int> > &trigger_checkers) {
     //Получение массива шашек, которыми надо ходить
     if (!bad_value(i + ci, j + cj) && empty_field(field[i + ci][j + cj])) {
